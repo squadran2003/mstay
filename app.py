@@ -17,6 +17,15 @@ def random_res_id():
     return num
 
 
+def return_room(reservation, hotel):
+    print(reservation.room.room_type)
+    if reservation.room.room_type == 'single bed':
+        hotel.single_bedrooms.append(reservation.room)
+    if reservation.room.room_type == 'double bed':
+        hotel.double_bedrooms.append(reservation.room)
+    else:
+        hotel.suites.append(reservation.room)
+
 def checkout(id, hotel):
     res = find_reservation(id, hotel.reservations)
     if res:
@@ -24,6 +33,7 @@ def checkout(id, hotel):
             res.guest.name, res.bill
         ))
         hotel.reservations = [i for i in hotel.reservations if i.id != id]
+        return_room(res, hotel)
 
 
 def find_reservation(id, reservations):
@@ -139,6 +149,7 @@ def start():
                     continue
                 room = hotel.double_bedrooms.pop()
             if room_type == '3':
+                print("hello")
                 if len(hotel.suites)<1:
                     print("No suites available")
                     continue

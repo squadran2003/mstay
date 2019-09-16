@@ -1,4 +1,7 @@
 from rooms import Room
+import random
+
+room_ids = []
 
 class Hotel:
     # hotel will have 52 rooms
@@ -20,13 +23,21 @@ class Hotel:
         self.address = address
         self.create_rooms()
 
+    def generate_id(self):
+        num = random.randint(1, 1000)
+        while len(room_ids) and num in room_ids:
+            num = random.randint(1, 1000)
+        room_ids.append(num)
+        return num
+
     def create_rooms(self):
+        id = self.generate_id()
         for i in range(1, 26):
-            self.single_bedrooms.append(Room(i, i, "single bed", 90, "£"))
+            self.single_bedrooms.append(Room(id, i, "single bed", 90, "£"))
         for i in range(1, 26):
-            self.double_bedrooms.append(Room(i, i, "double bed",150,"£"))
+            self.double_bedrooms.append(Room(id, i, "double bed",150,"£"))
         for i in range(1, 3):
-            self.suites.append(Room(i, i, "suite", 200, "£"))
+            self.suites.append(Room(id,i, "suite", 200, "£"))
 
     def list_rooms(self, option):
         if option == 1:
